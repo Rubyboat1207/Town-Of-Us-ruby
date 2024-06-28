@@ -42,6 +42,7 @@ namespace TownOfUs
         public static int SeerOn => (int)Generate.SeerOn.Get();
         public static int GlitchOn => (int)Generate.GlitchOn.Get();
         public static int MorphlingOn => (int)Generate.MorphlingOn.Get();
+        public static int WitchOn => (int)Generate.WitchOn.Get();
         public static int ExecutionerOn => (int)Generate.ExecutionerOn.Get();
         public static int SpyOn => (int)Generate.SpyOn.Get();
         public static int SnitchOn => (int)Generate.SnitchOn.Get();
@@ -159,6 +160,7 @@ namespace TownOfUs
         public static float SwoopCd => Generate.SwoopCooldown.Get();
         public static float SwoopDuration => Generate.SwoopDuration.Get();
         public static bool SwooperVent => Generate.SwooperVent.Get();
+        public static float CurseCd => Generate.CurseCd.Get();
         public static bool ImpostorSeeRoles => Generate.ImpostorSeeRoles.Get();
         public static bool DeadSeeRoles => Generate.DeadSeeRoles.Get();
         public static bool HiddenRoles => Generate.HiddenRoles.Get();

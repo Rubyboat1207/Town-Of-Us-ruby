@@ -39,6 +39,7 @@ namespace TownOfUs
         Morph,
         Mine,
         Swoop,
+        Curse,
         AltruistRevive,
         BarryButton,
         Drag,

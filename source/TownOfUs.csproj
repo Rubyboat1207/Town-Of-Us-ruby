@@ -36,4 +36,8 @@
 		<EmbeddedResource Include="Resources\*" />
 		<EmbeddedResource Include="Resources\Hats\**" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\curse.png" />
+	</ItemGroup>
 </Project>

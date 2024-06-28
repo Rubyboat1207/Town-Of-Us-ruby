@@ -66,6 +66,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption BomberOn;
         public static CustomNumberOption TraitorOn;
         public static CustomNumberOption WarlockOn;
+        public static CustomNumberOption WitchOn;
 
         public static CustomHeaderOption ImpostorSupportRoles;
         public static CustomNumberOption BlackmailerOn;
@@ -288,6 +289,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption SwoopCooldown;
         public static CustomNumberOption SwoopDuration;
         public static CustomToggleOption SwooperVent;
+
+        public static CustomHeaderOption Witch;
+        public static CustomNumberOption CurseCd;
 
         public static CustomHeaderOption Arsonist;
         public static CustomNumberOption DouseCooldown;
@@ -612,6 +616,8 @@ namespace TownOfUs.CustomOption
             GrenadierOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Grenadier</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             MorphlingOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Morphling</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            WitchOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Witch</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             SwooperOn = new CustomNumberOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Swooper</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -1237,6 +1243,10 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.imposter, "Swoop Duration", 10f, 5f, 15f, 1f, CooldownFormat);
             SwooperVent =
                 new CustomToggleOption(num++, MultiMenu.imposter, "Swooper Can Vent", false);
+
+            Witch = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Witch</color>");
+            CurseCd =
+                new CustomNumberOption(num++, MultiMenu.imposter, "Curse Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
 
             Venerer = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Venerer</color>");
             AbilityCooldown =

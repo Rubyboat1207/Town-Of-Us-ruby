@@ -36,6 +36,7 @@ using TownOfUs.NeutralRoles.VampireMod;
 using TownOfUs.CrewmateRoles.MayorMod;
 using System.Reflection;
 using TownOfUs.Patches.NeutralRoles;
+using TownOfUs.Patches.Roles;
 
 namespace TownOfUs
 {
@@ -930,6 +931,12 @@ namespace TownOfUs
                         swooperRole.TimeRemaining = CustomGameOptions.SwoopDuration;
                         swooperRole.Swoop();
                         break;
+                    case CustomRPC.Curse:
+                        var witch = Utils.PlayerById(reader.ReadByte());
+                        var witchRole = Role.GetRole<Witch>(witch);
+                        var curseTarget = Utils.PlayerById(reader.ReadByte());
+                        witchRole.Curse(curseTarget);
+                        break;
                     case CustomRPC.ChameleonSwoop:
                         var chameleon = Utils.PlayerById(reader.ReadByte());
                         var chameleonRole = Role.GetRole<Chameleon>(chameleon);
@@ -1407,6 +1414,9 @@ namespace TownOfUs
 
                     if (CustomGameOptions.MorphlingOn > 0)
                         ImpostorRoles.Add((typeof(Morphling), CustomGameOptions.MorphlingOn, false));
+
+                    if (CustomGameOptions.WitchOn > 0)
+                        ImpostorRoles.Add((typeof(Witch), CustomGameOptions.WitchOn, false));
 
                     if (CustomGameOptions.BlackmailerOn > 0)
                         ImpostorRoles.Add((typeof(Blackmailer), CustomGameOptions.BlackmailerOn, true));

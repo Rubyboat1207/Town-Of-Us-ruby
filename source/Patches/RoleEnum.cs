@@ -65,6 +65,8 @@ namespace TownOfUs
         Chameleon,
         CultistSnitch,
 
+        Witch,
+
         None
     }
 
