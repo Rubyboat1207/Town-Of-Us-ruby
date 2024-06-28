@@ -24,6 +24,7 @@ namespace TownOfUs.Patches.Roles
             AddToRoleHistory(RoleType);
             Faction = Faction.Impostors;
             LastCursed = DateTime.UtcNow;
+            CursedPlayers = new();
         }
 
         public KillButton CurseButton

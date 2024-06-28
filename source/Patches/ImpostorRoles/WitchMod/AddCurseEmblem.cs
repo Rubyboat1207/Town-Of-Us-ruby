@@ -1,39 +1,36 @@
 ﻿using HarmonyLib;
-using Reactor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TownOfUs.Patches.NeutralRoles;
 using TownOfUs.Patches.Roles;
 using TownOfUs.Roles;
 using UnityEngine;
 
 namespace TownOfUs.Patches.ImpostorRoles.WitchMod
 {
-    [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
-    internal class MeetingExiledEnd
+    [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
+    public class AddCurseEmblem
     {
-        private static void Postfix(ExileController __instance)
+        public static void Postfix(MeetingHud __instance)
         {
-
-            if (__instance.exiled != null && Utils.GetRole(__instance.exiled.Object) == RoleEnum.Witch)
-                return;
             PlayerControl witch = PlayerControl.AllPlayerControls.ToArray().Where((player) => Utils.GetRole(player) == RoleEnum.Witch).First();
 
             if (witch == null || witch.Data.IsDead)
                 return;
             Witch witchRole = Role.GetRole<Witch>(witch);
 
-            foreach (PlayerControl control in witchRole.CursedPlayers)
+            var cursedIds = witchRole.CursedPlayers.ToArray().Select(p => p.PlayerId);
+
+            foreach (var state in __instance.playerStates)
             {
-                Utils.RpcMurderPlayer(witch, control);
-                control.Die(DeathReason.Exile, false);
+                if(cursedIds.Contains(state.TargetPlayerId))
+                {
+                    var cursedText = GameObject.Instantiate(state.NameText, state.NameText.transform);
+                    cursedText.text = "CURSED";
+                }
             }
-
-            witchRole.CursedPlayers.Clear();
-
         }
     }
 }

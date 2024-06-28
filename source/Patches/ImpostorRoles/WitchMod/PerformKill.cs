@@ -25,7 +25,7 @@ namespace TownOfUs.Patches.ImpostorRoles.WitchMod
             if (__instance == role.CurseButton)
             {
                 if (role.CurseTimer() != 0) return false;
-                PlayerControl.LocalPlayer.Die(DeathReason.Kill, false);
+                if (target == null) return false;
                 role.Curse(target);
                 Utils.Rpc(CustomRPC.Curse, PlayerControl.LocalPlayer.PlayerId, target.PlayerId);
 
