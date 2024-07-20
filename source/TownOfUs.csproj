@@ -39,5 +39,6 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\curse.png" />
+	  <None Remove="Resources\CurseEmblem.png" />
 	</ItemGroup>
 </Project>

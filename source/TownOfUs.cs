@@ -38,6 +38,7 @@ namespace TownOfUs
         public static AssetLoader bundledAssets;
 
         public static Sprite JanitorClean;
+        public static Sprite WitchCurseEmblem;
         public static Sprite EngineerFix;
         public static Sprite SwapperSwitch;
         public static Sprite SwapperSwitchDisabled;
@@ -215,6 +216,7 @@ namespace TownOfUs
             ZoomMinusButton = CreateSprite("TownOfUs.Resources.Minus.png");
 
             CurseSprite = CreateSprite("TownOfUs.Resources.Curse.png");
+            WitchCurseEmblem = CreateSprite("TownOfUs.Resources.CurseEmblem.png");
 
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();

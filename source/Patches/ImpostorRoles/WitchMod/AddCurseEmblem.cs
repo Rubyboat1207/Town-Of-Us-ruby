@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TownOfUs.Patches.Roles;
 using TownOfUs.Roles;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TownOfUs.Patches.ImpostorRoles.WitchMod
 {
@@ -27,8 +28,20 @@ namespace TownOfUs.Patches.ImpostorRoles.WitchMod
             {
                 if(cursedIds.Contains(state.TargetPlayerId))
                 {
-                    var cursedText = GameObject.Instantiate(state.NameText, state.NameText.transform);
-                    cursedText.text = "CURSED";
+                    RectTransform originalRectTransform = state.NameText.GetComponent<RectTransform>();
+
+                    GameObject templateGO = new GameObject("CurseEmblem");
+                    templateGO.AddComponent<RectTransform>();
+                    var templateImg = templateGO.AddComponent<SpriteRenderer>();
+
+                    templateImg.sprite = TownOfUs.WitchCurseEmblem;
+                    GameObject curseEmblemGO = GameObject.Instantiate(templateGO, state.transform, false);
+                    curseEmblemGO.layer = 5;
+
+                    var transform = curseEmblemGO.GetComponent<RectTransform>();
+
+                    transform.localPosition = new Vector3(1,0,0);
+                    transform.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
                 }
             }
         }
