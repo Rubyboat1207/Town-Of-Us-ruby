@@ -32,6 +32,7 @@ namespace TownOfUs
 
         JanitorClean,
         SoulLeech,
+        LeechAbility,
         FixLights,
         EngineerFix,
         SetSwaps,

@@ -71,6 +71,8 @@ namespace TownOfUs
 
             avaliableBenifits.Remove(benifit);
 
+            Utils.Rpc(CustomRPC.LeechAbility, Player.PlayerId, (byte) LeechBenifit.AllBenifits.IndexOf(benifit));
+
             benifit.Action.Invoke(this);
         }
     }

@@ -735,6 +735,13 @@ namespace TownOfUs
                                 leechRole.SoulLeech(body);
 
                         break;
+                    case CustomRPC.LeechAbility:
+                        readByte1 = reader.ReadByte();
+                        var leechPlayer2 = Utils.PlayerById(readByte1);
+                        var leechRole2 = Role.GetRole<Leech>(leechPlayer2);
+                        readByte = reader.ReadByte();
+                        LeechBenifit.AllBenifits[readByte].Action.Invoke(leechRole2);
+                        break;
                     case CustomRPC.EngineerFix:
                         if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.MushroomMixupSabotage))
                         {
