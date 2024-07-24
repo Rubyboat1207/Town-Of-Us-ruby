@@ -43,6 +43,7 @@ namespace TownOfUs
         public static int GlitchOn => (int)Generate.GlitchOn.Get();
         public static int MorphlingOn => (int)Generate.MorphlingOn.Get();
         public static int WitchOn => (int)Generate.WitchOn.Get();
+        public static int LeechOn => (int)Generate.LeechOn.Get();
         public static int ExecutionerOn => (int)Generate.ExecutionerOn.Get();
         public static int SpyOn => (int)Generate.SpyOn.Get();
         public static int SnitchOn => (int)Generate.SnitchOn.Get();

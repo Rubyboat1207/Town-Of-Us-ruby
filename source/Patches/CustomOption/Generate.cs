@@ -67,6 +67,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption TraitorOn;
         public static CustomNumberOption WarlockOn;
         public static CustomNumberOption WitchOn;
+        public static CustomNumberOption LeechOn;
 
         public static CustomHeaderOption ImpostorSupportRoles;
         public static CustomNumberOption BlackmailerOn;
@@ -292,6 +293,9 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption Witch;
         public static CustomNumberOption CurseCd;
+
+        public static CustomHeaderOption Leech;
+
 
         public static CustomHeaderOption Arsonist;
         public static CustomNumberOption DouseCooldown;
@@ -543,6 +547,8 @@ namespace TownOfUs.CustomOption
             TrackerOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#009900FF>Tracker</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             TrapperOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#A7D1B3FF>Trapper</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            LeechOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#252729>Leech</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             CrewKillingRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Killing Roles");
@@ -1247,6 +1253,8 @@ namespace TownOfUs.CustomOption
             Witch = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Witch</color>");
             CurseCd =
                 new CustomNumberOption(num++, MultiMenu.imposter, "Curse Cooldown", 25f, 10f, 60f, 2.5f, CooldownFormat);
+
+            Leech = new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#252749>Void Leech</color>");
 
             Venerer = new CustomHeaderOption(num++, MultiMenu.imposter, "<color=#FF0000FF>Venerer</color>");
             AbilityCooldown =

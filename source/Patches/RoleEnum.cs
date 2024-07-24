@@ -66,6 +66,7 @@ namespace TownOfUs
         CultistSnitch,
 
         Witch,
+        Leech,
 
         None
     }

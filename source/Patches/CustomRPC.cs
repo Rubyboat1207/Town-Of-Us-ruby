@@ -31,6 +31,7 @@ namespace TownOfUs
         VampireWin,
 
         JanitorClean,
+        SoulLeech,
         FixLights,
         EngineerFix,
         SetSwaps,

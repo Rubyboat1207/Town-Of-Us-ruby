@@ -116,6 +116,9 @@ namespace TownOfUs
 
         public static Sprite CurseSprite;
 
+        public static Sprite SoulReminantSprite;
+        public static Sprite LeechButtonSprite;
+
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
         private static DLoadImage _iCallLoadImage;
@@ -217,6 +220,9 @@ namespace TownOfUs
 
             CurseSprite = CreateSprite("TownOfUs.Resources.Curse.png");
             WitchCurseEmblem = CreateSprite("TownOfUs.Resources.CurseEmblem.png");
+
+            SoulReminantSprite = CreateSprite("TownOfUs.Resources.SoulReminant.png");
+            LeechButtonSprite = CreateSprite("TownOfUs.Resources.LeechButton.png");
 
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();

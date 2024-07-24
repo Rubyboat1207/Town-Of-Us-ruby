@@ -28,7 +28,7 @@ namespace TownOfUs.Patches.ImpostorRoles.WitchMod
 
             foreach (PlayerControl control in witchRole.CursedPlayers)
             {
-                Utils.RpcMurderPlayer(witch, control);
+                //Utils.RpcMurderPlayer(witch, control);
                 control.Die(DeathReason.Exile, false);
             }
 

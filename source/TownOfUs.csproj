@@ -40,5 +40,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\curse.png" />
 	  <None Remove="Resources\CurseEmblem.png" />
+	  <None Remove="Resources\leechButton.png" />
+	  <None Remove="Resources\SoulReminant.png" />
 	</ItemGroup>
 </Project>

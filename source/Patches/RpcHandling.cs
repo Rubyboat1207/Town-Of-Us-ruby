@@ -724,6 +724,17 @@ namespace TownOfUs
                                 Coroutines.Start(Coroutine.CleanCoroutine(body, janitorRole));
 
                         break;
+                    case CustomRPC.SoulLeech:
+                        readByte1 = reader.ReadByte();
+                        var leechPlayer = Utils.PlayerById(readByte1);
+                        var leechRole = Role.GetRole<Leech>(leechPlayer);
+                        readByte = reader.ReadByte();
+                        var deadBodies2 = Object.FindObjectsOfType<DeadBody>();
+                        foreach (var body in deadBodies2)
+                            if (body.ParentId == readByte)
+                                leechRole.SoulLeech(body);
+
+                        break;
                     case CustomRPC.EngineerFix:
                         if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.MushroomMixupSabotage))
                         {
@@ -1304,6 +1315,9 @@ namespace TownOfUs
                     #region Crewmate Roles
                     if (CustomGameOptions.MayorOn > 0)
                         CrewmateRoles.Add((typeof(Mayor), CustomGameOptions.MayorOn, true));
+
+                    if (CustomGameOptions.LeechOn > 0)
+                        CrewmateRoles.Add((typeof(Leech), CustomGameOptions.LeechOn, false));
 
                     if (CustomGameOptions.SheriffOn > 0)
                         CrewmateRoles.Add((typeof(Sheriff), CustomGameOptions.SheriffOn, false));

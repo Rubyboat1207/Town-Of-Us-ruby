@@ -1,6 +1,7 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
 using TownOfUs.Extensions;
+using TownOfUs.Patches.Roles;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -69,6 +70,17 @@ namespace TownOfUs
                 if (role.Revealed)
                 {
                     __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius/2, t) *
+                       GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
+                    return false;
+                }
+            }
+
+            if(player._object.Is(RoleEnum.Leech))
+            {
+                var role = Role.GetRole<Leech>(player._object);
+                if(role.HasIncreasedVision)
+                {
+                    __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * 2, t) *
                        GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
                     return false;
                 }

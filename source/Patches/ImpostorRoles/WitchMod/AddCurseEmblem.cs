@@ -34,6 +34,8 @@ namespace TownOfUs.Patches.ImpostorRoles.WitchMod
                     templateGO.AddComponent<RectTransform>();
                     var templateImg = templateGO.AddComponent<SpriteRenderer>();
 
+                    GameObject.Destroy(templateGO);
+
                     templateImg.sprite = TownOfUs.WitchCurseEmblem;
                     GameObject curseEmblemGO = GameObject.Instantiate(templateGO, state.transform, false);
                     curseEmblemGO.layer = 5;
