@@ -1,5 +1,6 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
+using System.Linq;
 using TownOfUs.Extensions;
 using TownOfUs.Patches.Roles;
 using TownOfUs.Roles;
@@ -75,16 +76,20 @@ namespace TownOfUs
                 }
             }
 
-            if(player._object.Is(RoleEnum.Leech))
+            PlayerControl leech = PlayerControl.AllPlayerControls.ToArray().Where((player) => Utils.GetRole(player) == RoleEnum.Leech).FirstOrDefault();
+            if (leech != null)
             {
-                var role = Role.GetRole<Leech>(player._object);
-                if(role.HasIncreasedVision)
+                Leech role = Role.GetRole<Leech>(leech);
+
+                if (role.HasIncreasedVision)
                 {
-                    __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * 2, t) *
+                    __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * 1.25f, t) *
                        GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;
                     return false;
                 }
             }
+
+            
 
             __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, t) *
                        GameOptionsManager.Instance.currentNormalGameOptions.CrewLightMod;

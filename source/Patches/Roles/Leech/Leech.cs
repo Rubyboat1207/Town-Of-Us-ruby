@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TownOfUs.Roles;
 using UnityEngine;
 
@@ -14,8 +12,9 @@ namespace TownOfUs
         public DeadBody ClosestBody;
         public DateTime LastLeeched;
         public bool HasIncreasedVision = false;
-        public List<LeechBenifit> NonCompletedBenifits = new();
+        public List<LeechBenefit> CompletedBenifits = new();
         public bool UploadBuff = false;
+        public bool KillDistanceDebuff = false;
 
         public Leech(PlayerControl player) : base(player) {
             Name = "Leech";
@@ -44,7 +43,7 @@ namespace TownOfUs
         {
             var utcNow = DateTime.UtcNow;
             var timeSpan = utcNow - LastLeeched;
-            var num = CustomGameOptions.CurseCd * 1000f;
+            var num = 20 * 1000f;
             var flag2 = num - (float)timeSpan.TotalMilliseconds < 0f;
             if (flag2) return 0;
             return (num - (float)timeSpan.TotalMilliseconds) / 1000f;
@@ -52,6 +51,7 @@ namespace TownOfUs
 
         public void SoulLeech(DeadBody deadBody)
         {
+            Debug.Log("Soul Leech Called");
             if (deadBody == null) return;
             LastLeeched = DateTime.UtcNow;
 
@@ -65,15 +65,79 @@ namespace TownOfUs
 
             GameObject.Destroy(deadBody.gameObject);
 
-            var avaliableBenifits = LeechBenifit.AllBenifits.Where(b => b.isAllowedToRun(this)).ToList();
+            var avaliableBenifits = LeechBenefit.AllBenifits.Where(b => !CompletedBenifits.Contains(b) && b.isAllowedToRun(this)).ToList();
 
             var benifit = avaliableBenifits[UnityEngine.Random.RandomRange(0, avaliableBenifits.Count)];
 
-            avaliableBenifits.Remove(benifit);
+            CompletedBenifits.Add(benifit);
 
-            Utils.Rpc(CustomRPC.LeechAbility, Player.PlayerId, (byte) LeechBenifit.AllBenifits.IndexOf(benifit));
+            Utils.Rpc(CustomRPC.LeechAbility, Player.PlayerId, (byte)LeechBenefit.AllBenifits.IndexOf(benifit));
 
             benifit.Action.Invoke(this);
+            UpdateHUD(benifit);
+        }
+
+        public void SoulLeechNoReward(DeadBody deadBody)
+        {
+            Debug.Log("Soul Leech Called");
+            if (deadBody == null) return;
+            LastLeeched = DateTime.UtcNow;
+
+            var reminant = new GameObject("BodyReminant");
+
+            reminant.transform.position = deadBody.transform.position;
+            reminant.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            var renderer = reminant.AddComponent<SpriteRenderer>();
+
+            renderer.sprite = TownOfUs.SoulReminantSprite;
+
+            GameObject.Destroy(deadBody.gameObject);
+        }
+
+        // This one gets called only by RPC
+        public void ActivateSoulLeechReward(byte benifitIndex)
+        {
+            var benifit = LeechBenefit.AllBenifits[benifitIndex];
+            CompletedBenifits.Add(benifit);
+
+            benifit.Action.Invoke(this);
+
+            UpdateHUD(benifit);
+        }
+
+        public void UpdateHUD(LeechBenefit addedBenifit)
+        {
+            Debug.Log("Updating HUD");
+
+            if(addedBenifit.Sprite == null)
+            {
+                return;
+            }
+            var hudManager = HudManager.Instance;
+
+            GameObject leechHudStuff = GameObject.Find("LeechHUDStuff");
+
+            if(!leechHudStuff)
+            {
+                leechHudStuff = new GameObject("LeechHUDStuff");
+
+                leechHudStuff.AddComponent<RectTransform>();
+                leechHudStuff.transform.SetParent(hudManager.TaskStuff.transform.GetChild(0));
+
+                leechHudStuff.transform.localPosition = new Vector3(4.2f, -0.3f, 0);
+            }
+
+            GameObject leechBenifitEmblem = new GameObject("BenifitEmblem");
+            var transform = leechBenifitEmblem.AddComponent<RectTransform>();
+            var emblemRenderer = leechBenifitEmblem.AddComponent<SpriteRenderer>();
+
+            emblemRenderer.sprite = addedBenifit.Sprite;
+            leechBenifitEmblem.layer = 5;
+            transform.SetParent(leechHudStuff.transform);
+
+            transform.localPosition = Vector3.zero;
+            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            transform.localPosition += new Vector3(0.6f, 0, 0) * (CompletedBenifits.Where(b => b.Sprite != null).Count() - 1);
         }
     }
 }

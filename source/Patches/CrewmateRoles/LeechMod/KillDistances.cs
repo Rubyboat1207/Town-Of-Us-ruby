@@ -1,25 +1,30 @@
-﻿using HarmonyLib;
+﻿/*using AmongUs.GameOptions;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 using TownOfUs.Roles;
 
 namespace TownOfUs.Patches.CrewmateRoles.LeechMod
 {
-    [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
-    public class UploadDataTaskSpeedup
+    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.KillDistances))]
+    internal class KillDistances
     {
-        private static void Postfix(HudManager __instance)
+        [HarmonyPostfix]
+        public static void Postfix(ref float __result)
         {
             PlayerControl leech = PlayerControl.AllPlayerControls.ToArray().Where((player) => Utils.GetRole(player) == RoleEnum.Leech).FirstOrDefault();
             if (leech == null) return;
 
             Leech role = Role.GetRole<Leech>(leech);
-            if (role.UploadBuff)
-                __instance.transform.parent.GetComponentInChildren<UploadDataGame>().timer += 1 * Time.deltaTime;
+
+            if(role.KillDistanceDebuff)
+            {
+                __result *= 0.75f;
+            }
         }
     }
 }
+*/

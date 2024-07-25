@@ -730,9 +730,10 @@ namespace TownOfUs
                         var leechRole = Role.GetRole<Leech>(leechPlayer);
                         readByte = reader.ReadByte();
                         var deadBodies2 = Object.FindObjectsOfType<DeadBody>();
+                        Debug.Log("Preforming RPC Leech");
                         foreach (var body in deadBodies2)
                             if (body.ParentId == readByte)
-                                leechRole.SoulLeech(body);
+                                leechRole.SoulLeechNoReward(body);
 
                         break;
                     case CustomRPC.LeechAbility:
@@ -740,7 +741,7 @@ namespace TownOfUs
                         var leechPlayer2 = Utils.PlayerById(readByte1);
                         var leechRole2 = Role.GetRole<Leech>(leechPlayer2);
                         readByte = reader.ReadByte();
-                        LeechBenifit.AllBenifits[readByte].Action.Invoke(leechRole2);
+                        leechRole2.ActivateSoulLeechReward(readByte);
                         break;
                     case CustomRPC.EngineerFix:
                         if (ShipStatus.Instance.Systems.ContainsKey(SystemTypes.MushroomMixupSabotage))

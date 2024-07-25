@@ -26,6 +26,7 @@ namespace TownOfUs.Patches.CrewmateRoles.LeechMod
             {
                 if (role.LeechTimer() != 0) return false;
                 if (target == null) return false;
+                Debug.Log("Preforming Kill");
                 role.SoulLeech(target);
                 Utils.Rpc(CustomRPC.SoulLeech, PlayerControl.LocalPlayer.PlayerId, target.ParentId);
 
