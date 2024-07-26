@@ -19,7 +19,15 @@ namespace TownOfUs.Patches.CrewmateRoles.LeechMod
 
             Leech role = Role.GetRole<Leech>(leech);
             if (role.UploadBuff)
-                __instance.transform.parent.GetComponentInChildren<UploadDataGame>().timer += 1 * Time.deltaTime;
+            {
+                var uploadData = __instance.transform.parent.GetComponentInChildren<UploadDataGame>();
+                if(uploadData != null)
+                {
+                    uploadData.timer += 1 * Time.deltaTime;
+                }
+                
+            }
+                
         }
     }
 }
