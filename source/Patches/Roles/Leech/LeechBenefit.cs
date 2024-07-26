@@ -20,33 +20,38 @@ namespace TownOfUs.Roles
             this.Sprite = sprite;
         }
 
+        public static LeechBenefit CompleteTasksEffect = new LeechBenefit(r =>
+        {
+            var incompleteTasks = r.Player.myTasks.ToArray().Where(t => !t.IsComplete).ToList();
+            int tasksAutoCompleted = 0;
+            foreach (var task in incompleteTasks)
+            {
+                if (tasksAutoCompleted > incompleteTasks.Count / 2)
+                {
+                    break;
+                }
+
+                if (!task.IsComplete)
+                {
+                    tasksAutoCompleted++;
+                    task.Complete();
+                }
+            }
+            return;
+        }, r =>
+        {
+            return r.Player.myTasks.ToArray().Where(t => !t.IsComplete).Count() > 4;
+        }, null);
+        public static LeechBenefit IncreaseVision = new LeechBenefit(r => r.HasIncreasedVision = true, r => !r.HasIncreasedVision, TownOfUs.LeechLightSprite);
+        public static LeechBenefit DecreaseUploadSpeed = new LeechBenefit(r => r.UploadBuff = true, r => !r.UploadBuff, TownOfUs.LeechUploadSprite);
+        public static LeechBenefit SabotageQuickFix = new LeechBenefit(r => r.SabotageQuickFix = true, r => !r.SabotageQuickFix, TownOfUs.LeechQuickFixSprite);
+
         public static List<LeechBenefit> AllBenifits = new List<LeechBenefit>()
         {
-            new LeechBenefit(r =>
-            {
-                var incompleteTasks = r.Player.myTasks.ToArray().Where(t => !t.IsComplete).ToList();
-                int tasksAutoCompleted = 0;
-                foreach (var task in incompleteTasks)
-                {
-                    if(tasksAutoCompleted > incompleteTasks.Count / 2)
-                    {
-                        break;
-                    }
-
-                    if(!task.IsComplete)
-                    {
-                        tasksAutoCompleted++;
-                        task.Complete();
-                    }
-                }
-                return;
-            }, r =>
-            {
-                return r.Player.myTasks.ToArray().Where(t => !t.IsComplete).Count() > 4;
-            }, null),
-            new LeechBenefit(r => r.HasIncreasedVision = true, r => !r.HasIncreasedVision, TownOfUs.LeechLightSprite),
-            new LeechBenefit(r => r.UploadBuff = true, r => !r.UploadBuff, TownOfUs.LeechUploadSprite),
-/*            new LeechBenifit(r => r.KillDistanceDebuff = true, r => !r.KillDistanceDebuff, TownOfUs.LeechKillDistanceSprite),*/
+            CompleteTasksEffect,
+            IncreaseVision,
+            DecreaseUploadSpeed,
+            SabotageQuickFix
         };
     }
 }

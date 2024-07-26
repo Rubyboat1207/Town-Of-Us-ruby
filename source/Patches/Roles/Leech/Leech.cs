@@ -15,6 +15,7 @@ namespace TownOfUs
         public List<LeechBenefit> CompletedBenifits = new();
         public bool UploadBuff = false;
         public bool KillDistanceDebuff = false;
+        public bool SabotageQuickFix = false;
 
         public Leech(PlayerControl player) : base(player) {
             Name = "Leech";
@@ -65,11 +66,22 @@ namespace TownOfUs
 
             GameObject.Destroy(deadBody.gameObject);
 
-            var avaliableBenifits = LeechBenefit.AllBenifits.Where(b => !CompletedBenifits.Contains(b) && b.isAllowedToRun(this)).ToList();
+            var avaliableBenifits = LeechBenefit.AllBenifits.Where(b => (!CompletedBenifits.Contains(b)) && b.isAllowedToRun(this)).ToList();
+
+            if(avaliableBenifits.Count == 0)
+            {
+                Debug.Log("Count was zero?");
+                LeechBenefit.AllBenifits.ForEach(b =>
+                {
+                    Debug.Log(LeechBenefit.AllBenifits.IndexOf(b) + " - allowed to run: " + (b.isAllowedToRun(this) ? "true" : "false"));
+                });
+                return;
+            }
 
             var benifit = avaliableBenifits[UnityEngine.Random.RandomRange(0, avaliableBenifits.Count)];
 
             CompletedBenifits.Add(benifit);
+            Debug.Log("Benifit" + LeechBenefit.AllBenifits.IndexOf(benifit));
 
             Utils.Rpc(CustomRPC.LeechAbility, Player.PlayerId, (byte)LeechBenefit.AllBenifits.IndexOf(benifit));
 
@@ -77,6 +89,7 @@ namespace TownOfUs
             UpdateHUD(benifit);
         }
 
+        //[CustomRPCFunc(CustomRPC.SoulLeech)]
         public void SoulLeechNoReward(DeadBody deadBody)
         {
             Debug.Log("Soul Leech Called");
@@ -95,8 +108,10 @@ namespace TownOfUs
         }
 
         // This one gets called only by RPC
+        //[CustomRPCFunc(CustomRPC.LeechAbility)]
         public void ActivateSoulLeechReward(byte benifitIndex)
         {
+            Debug.Log("REWARDED");
             var benifit = LeechBenefit.AllBenifits[benifitIndex];
             CompletedBenifits.Add(benifit);
 
@@ -108,8 +123,9 @@ namespace TownOfUs
         public void UpdateHUD(LeechBenefit addedBenifit)
         {
             Debug.Log("Updating HUD");
+            Debug.Log(addedBenifit.Sprite == null ? "NULL" : "NOT NULL");
 
-            if(addedBenifit.Sprite == null)
+            if (addedBenifit.Sprite == null)
             {
                 return;
             }

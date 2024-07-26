@@ -730,7 +730,6 @@ namespace TownOfUs
                         var leechRole = Role.GetRole<Leech>(leechPlayer);
                         readByte = reader.ReadByte();
                         var deadBodies2 = Object.FindObjectsOfType<DeadBody>();
-                        Debug.Log("Preforming RPC Leech");
                         foreach (var body in deadBodies2)
                             if (body.ParentId == readByte)
                                 leechRole.SoulLeechNoReward(body);

@@ -121,6 +121,7 @@ namespace TownOfUs
         public static Sprite LeechLightSprite;
         public static Sprite LeechUploadSprite;
         public static Sprite LeechKillDistanceSprite;
+        public static Sprite LeechQuickFixSprite;
 
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
@@ -229,6 +230,7 @@ namespace TownOfUs
             LeechLightSprite = CreateSprite("TownOfUs.Resources.LightsLeechEffect.png");
             LeechUploadSprite = CreateSprite("TownOfUs.Resources.UploadLeechEffect.png");
             LeechKillDistanceSprite = CreateSprite("TownOfUs.Resources.KillDistanceLeechEffect.png");
+            LeechQuickFixSprite = CreateSprite("TownOfUs.Resources.QuickFixLeechEffect.png");
 
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();
