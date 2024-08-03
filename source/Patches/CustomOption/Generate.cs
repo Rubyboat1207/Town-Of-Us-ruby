@@ -513,6 +513,9 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ChillDuration;
         public static CustomNumberOption ChillStartSpeed;
 
+        public static CustomToggleOption CommuismActive;
+
+
         public static Func<object, string> PercentFormat { get; } = value => $"{value:0}%";
         private static Func<object, string> CooldownFormat { get; } = value => $"{value:0.0#}s";
         private static Func<object, string> MultiplierFormat { get; } = value => $"{value:0.0#}x";
@@ -797,6 +800,8 @@ namespace TownOfUs.CustomOption
 
             CustomGameSettings =
                 new CustomHeaderOption(num++, MultiMenu.main, "Custom Game Settings");
+            CommuismActive =
+                new CustomToggleOption(num++, MultiMenu.main, "Communism", false);
             ColourblindComms = new CustomToggleOption(num++, MultiMenu.main, "Camouflaged Comms", false);
             ImpostorSeeRoles = new CustomToggleOption(num++, MultiMenu.main, "Impostors Can See The Roles Of Their Team", false);
             DeadSeeRoles =

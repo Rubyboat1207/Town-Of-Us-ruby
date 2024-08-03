@@ -219,7 +219,7 @@ namespace TownOfUs
                 string githubURI = "";
                 if (updateType == "TOU")
                 {
-                    githubURI = "https://api.github.com/repos/eDonnes124/Town-Of-Us-R/releases/latest";
+                    githubURI = "https://github.com/Rubyboat1207/Town-Of-Us-ruby/releases/latest";
                 }
                 else if (updateType == "Submerged")
                 {

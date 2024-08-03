@@ -37,6 +37,7 @@ using TownOfUs.CrewmateRoles.MayorMod;
 using System.Reflection;
 using TownOfUs.Patches.NeutralRoles;
 using TownOfUs.Patches.Roles;
+using TownOfUs.Patches.CustomOption;
 
 namespace TownOfUs
 {
@@ -650,6 +651,7 @@ namespace TownOfUs
 
                 byte readByte, readByte1, readByte2;
                 sbyte readSByte, readSByte2;
+                RPCRegistry.ExecuteIfExists((CustomRPC)callId, reader);
                 switch ((CustomRPC) callId)
                 {
                     case CustomRPC.SetRole:
@@ -1239,6 +1241,9 @@ namespace TownOfUs
                     case CustomRPC.Retribution:
                         var lastVoted = Utils.PlayerById(reader.ReadByte());
                         AssassinKill.MurderPlayer(lastVoted);
+                        break;
+                    case CustomRPC.SwapTasks:
+                        CommunismUtility.SwapTasks(reader.ReadByte(), reader.ReadUInt32(), reader.ReadByte());
                         break;
                 }
             }

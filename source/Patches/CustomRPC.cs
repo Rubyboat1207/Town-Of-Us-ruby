@@ -86,6 +86,7 @@ namespace TownOfUs
         HunterStalk,
         HunterCatchPlayer,
         Retribution,
+        SwapTasks,
 
         BypassKill,
         BypassMultiKill,
@@ -142,19 +143,11 @@ namespace TownOfUs
                 var name = ParameterNames[i];
                 var type = ParameterTypes[i];
 
-                if (name == "__playerInstance" && type == typeof(PlayerControl))
+                if(type == typeof(PlayerControl))
                 {
-                    if(usedPlayerAsFirstId)
-                    {
-                        args.Add(Utils.PlayerById(firstId));
-                    }
-                    else
-                    {
-                        args.Add(Utils.PlayerById(reader.ReadByte()));
-                    }
-                    
+                    args.Add(Utils.PlayerById(reader.ReadByte()));
                 }
-                if (type == typeof(DeadBody))
+                else if (type == typeof(DeadBody))
                 {
                     var deadBodyId = reader.ReadByte();
                     var deadBodies2 = UnityEngine.Object.FindObjectsOfType<DeadBody>();
@@ -167,10 +160,18 @@ namespace TownOfUs
                             added = true;
                         }
                     }
-                    if(!added)
+                    if (!added)
                     {
                         args.Add(null);
-                    }       
+                    }
+                }
+                else if (type == typeof(PlayerTask))
+                {
+                    var taskOwner = Utils.PlayerById(reader.ReadByte());
+
+                    byte taskId = reader.ReadByte();
+
+                    args.Add(taskOwner.myTasks.ToArray().ToList().Find(t => t.Id == taskId));
                 }
                 else if(type == typeof(byte))
                 {
