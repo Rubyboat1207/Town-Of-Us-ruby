@@ -15,11 +15,8 @@ namespace TownOfUs.Patches.CustomOption
     {
         public static void Postfix(PlayerControl pc)
         {
-            Debug.Log("Tasks Done: " + GameData.Instance.CompletedTasks);
-
-            if(CustomGameOptions.CommunismActive && !pc.Data.IsDead && pc.AmOwner)
+            if(CustomGameOptions.CommunismActive && !pc.Data.IsDead && pc.PlayerId == PlayerControl.LocalPlayer.PlayerId)
             {
-                Debug.Log("Proceeding");
                 if (pc.AllTasksCompleted())
                 {
                     var playersWithTasks = PlayerControl.AllPlayerControls.ToArray().ToList().Where(pc => !pc.AllTasksCompleted() && Role.GetRole(pc).Faction == Faction.Crewmates);
@@ -30,15 +27,11 @@ namespace TownOfUs.Patches.CustomOption
 
                         var task = acceptableTasks[UnityEngine.Random.RandomRange(0, acceptableTasks.Count)];
 
-                        // log all relevant information
-
                         Utils.Rpc(CustomRPC.SwapTasks, task.Owner.PlayerId, task.Id, pc.PlayerId);
-                        Debug.Log("Params: " + task.Owner.PlayerId + " " + task.Id + " " + pc.PlayerId);
                         CommunismUtility.SwapTasks(task.Owner.PlayerId, task.Id, pc.PlayerId, false);
                     }
                 }
             }
-            
         }
     }
 
@@ -50,15 +43,12 @@ namespace TownOfUs.Patches.CustomOption
             {
                 return;
             }
-            Debug.Log("Swapping tasks YAY");
-            Debug.Log("Params2: " + ownerId + " " + taskId + " " + playerId);
             var owner = Utils.PlayerById(ownerId);
             var recipient = Utils.PlayerById(playerId);
             var taskToSwap = owner.myTasks.ToArray().ToList().Find(t => t.Id == taskId);
             var previousOwnerInfo = taskToSwap.Owner.Data;
             var recipientInfo = recipient.Data;
             var taskInfo = previousOwnerInfo.FindTaskById(taskToSwap.Id);
-            Debug.Log("Taking from " + previousOwnerInfo.PlayerName + " and giving to " + recipientInfo.PlayerName);
 
 
             taskInfo.Id = (uint)recipientInfo.Tasks.Count;

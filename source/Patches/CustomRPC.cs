@@ -128,12 +128,11 @@ namespace TownOfUs
         public void Execute(MessageReader reader)
         {
             object executingObject = null;
-            byte firstId = reader.ReadByte();
             bool usedPlayerAsFirstId = false;
             if (Method.DeclaringType.IsInstanceOfType(typeof(Role)))
             {
                 usedPlayerAsFirstId = true;
-                executingObject = Role.GetRole(Utils.PlayerById(firstId));
+                executingObject = Role.GetRole(Utils.PlayerById(reader.ReadByte()));
             }
 
             List<object> args = new List<object>();
