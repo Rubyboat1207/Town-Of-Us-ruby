@@ -641,7 +641,7 @@ namespace TownOfUs
                 Role.GenRole<Role>(typeof(Crewmate), crewmate);
         }
 
-
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         public static class HandleRpc
         {
             public static void Postfix([HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
