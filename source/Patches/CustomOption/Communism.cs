@@ -15,10 +15,13 @@ namespace TownOfUs.Patches.CustomOption
     {
         public static void Postfix(PlayerControl pc)
         {
+            //Debug.Log("Task Completed");
             if(CustomGameOptions.CommunismActive && !pc.Data.IsDead && pc.PlayerId == PlayerControl.LocalPlayer.PlayerId)
             {
+                //Debug.Log("Trying to execute communism");
                 if (pc.AllTasksCompleted())
                 {
+                    //Debug.Log("All my tasks are done");
                     var playersWithTasks = PlayerControl.AllPlayerControls.ToArray().ToList().Where(pc => !pc.AllTasksCompleted() && Role.GetRole(pc).Faction == Faction.Crewmates);
                     if (playersWithTasks.Count() > 0)
                     {
@@ -26,7 +29,7 @@ namespace TownOfUs.Patches.CustomOption
                         var acceptableTasks = randomPlayer.myTasks.ToArray().Where(t => !t.IsComplete).ToList();
 
                         var task = acceptableTasks[UnityEngine.Random.RandomRange(0, acceptableTasks.Count)];
-
+                        //Debug.Log("Swapping with " + randomPlayer.Data.PlayerName);
                         Utils.Rpc(CustomRPC.SwapTasks, task.Owner.PlayerId, task.Id, pc.PlayerId);
                         CommunismUtility.SwapTasks(task.Owner.PlayerId, task.Id, pc.PlayerId, false);
                     }
@@ -39,7 +42,8 @@ namespace TownOfUs.Patches.CustomOption
     {
         public static void SwapTasks(byte ownerId, uint taskId, byte playerId, bool isRPC=true)
         {
-            if(isRPC && playerId == PlayerControl.LocalPlayer.PlayerId)
+            //Debug.Log("SwapTasks");
+            if (isRPC && playerId == PlayerControl.LocalPlayer.PlayerId)
             {
                 return;
             }
